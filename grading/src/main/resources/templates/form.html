@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PUC Grading System</title>
+    <style>
+        body {
+            background-color: #f5f5f5; 
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 40px;
+        }
+
+        #form {
+            width: 360px;
+            margin: 20px auto 0 auto;
+            padding: 25px 30px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+        }
+
+        #form h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .input-control {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+        }
+
+        .input-control label {
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .input-control input {
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 15px;
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        .input-control input:focus {
+            outline: none;
+            border-color: #3182ce;
+        }
+
+        .input-control.success input {
+            border-color: #48bb78;
+        }
+
+        .input-control.error input {
+            border-color: #e53e3e;
+        }
+
+        .input-control .error {
+            color: #e53e3e;
+            font-size: 12px;
+            margin-top: 4px;
+            height: 16px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3498db;
+        }
+
+        #Msg {
+            color: #e53e3e;
+            margin-top: 16px;
+            text-align: center;
+            font-size: 13px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form id="form" action="/submit" method="post" novalidate>
+        <h1>PUC Student Grading</h1>
+
+        <div class="input-control">
+            <label for="studentID">Student ID:</label>
+            <input type="text" id="studentID" name="studentID" required>
+            <div class="error" id="idError"></div>
+        </div>
+
+        <div class="input-control">
+            <label for="name">Student Name:</label>
+            <input type="text" id="name" name="name" required>
+            <div class="error" id="nameError"></div>
+        </div>
+
+        <div class="input-control">
+            <label for="subject">Subject Name:</label>
+            <input type="text" id="subject" name="subject" required>
+            <div class="error" id="subjectError"></div>
+        </div>
+
+        <div class="input-control">
+            <label for="score">Score (0-100):</label>
+            <input type="number" id="score" name="score" min="0" max="100" required>
+            <div class="error" id="scoreError"></div>
+        </div>
+
+        <button type="submit">Calculate Grade</button>
+
+        <div id="Msg">Please fill in all fields correctly.</div>
+    </form>
+
+    <script>
+        const form = document.getElementById('form');
+        const studentID = document.getElementById('studentID');
+        const name = document.getElementById('name');
+        const subject = document.getElementById('subject');
+        const score = document.getElementById('score');
+        const msg = document.getElementById('Msg');
+
+        form.addEventListener('submit', (e) => {
+            let isValid = true;
+
+            document.querySelectorAll('.input-control').forEach(ctrl => {
+                ctrl.classList.remove('success', 'error');
+            });
+
+            // Student ID validation
+            if (studentID.value.trim() === '' || isNaN(studentID.value.trim())) {
+                setError(studentID, 'Student ID must be a number');
+                isValid = false;
+            } else {
+                setSuccess(studentID);
+            }
+
+            // Name validation
+            const namePattern = /^[A-Za-z\s]+$/;
+            if (name.value.trim() === '') {
+                setError(name, 'Name is required');
+                isValid = false;
+            } else if (!namePattern.test(name.value.trim())) {
+                setError(name, 'Name must contain only letters');
+                isValid = false;
+            } else {
+                setSuccess(name);
+            }
+
+            // Subject validation
+            const subjectPattern = /^[A-Za-z\s]+$/;
+            if (subject.value.trim() === '') {
+                setError(subject, 'Subject is required');
+                isValid = false;
+            } else if (!subjectPattern.test(subject.value.trim())) {
+                setError(subject, 'Subject must contain only letters');
+                isValid = false;
+            } else {
+                setSuccess(subject);
+            }
+
+            // Score validation
+            const scoreVal = parseInt(score.value);
+            if (isNaN(scoreVal) || scoreVal < 0 || scoreVal > 100) {
+                setError(score, 'Score must be between 0 and 100');
+                isValid = false;
+            } else {
+                setSuccess(score);
+            }
+
+            if (!isValid) {
+                msg.style.display = 'block';
+                e.preventDefault();
+            } else {
+                msg.style.display = 'none';
+            }
+        });
+
+        function setError(element, message) {
+            const parent = element.parentElement;
+            parent.classList.add('error');
+            parent.querySelector('.error').innerText = message;
+        }
+
+        function setSuccess(element) {
+            const parent = element.parentElement;
+            parent.classList.add('success');
+            parent.querySelector('.error').innerText = '';
+        }
+    </script>
+</body>
+</html>

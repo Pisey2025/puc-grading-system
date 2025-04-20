@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PUC Student Grading Result</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px; 
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            margin: 10vh auto 0 auto; 
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .info {
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .info span:first-child {
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        .info span:last-child {
+            color: #2c3e50;
+        }
+
+        .btn {
+            display: block;
+            width: 96%;
+            padding: 12px;
+            background-color: #2980b9;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>PUC Student Grading Result</h2>
+
+        <div class="info">
+            <span>Student ID:</span>
+            <span>[[${studentID}]]</span>
+        </div>
+
+        <div class="info">
+            <span>Name:</span>
+            <span>[[${name}]]</span>
+        </div>
+
+        <div class="info">
+            <span>Subject:</span>
+            <span>[[${subject}]]</span>
+        </div>
+
+        <div class="info">
+            <span>Score:</span>
+            <span>[[${score}]]</span>
+        </div>
+
+        <div class="info">
+            <span>Grade:</span>
+            <span>[[${grade}]]</span>
+        </div>
+
+        <a class="btn" href="/">Grade Another Student</a>
+    </div>
+</body>
+</html>
